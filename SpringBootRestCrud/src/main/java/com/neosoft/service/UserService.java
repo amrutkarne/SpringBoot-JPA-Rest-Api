@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
-import com.neosoft.bean.User;
+import com.neosoft.entity.User;
 import com.neosoft.repository.UserDataSort;
 import com.neosoft.repository.UserRepository;
 
@@ -59,7 +59,7 @@ public class UserService{
 		return userDataSort.findByLastName(lastName);
 	}
 
-	public List<User> getAllUsersByPincode(int pincode) {
+	public List<User> getAllUsersByPincode(String pincode) {
 		return userDataSort.findBypincode(pincode);
 	}	
 }

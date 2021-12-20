@@ -14,67 +14,81 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.neosoft.bean.User;
+import com.neosoft.convertor.UserConverter;
+import com.neosoft.dto.UserDto;
+import com.neosoft.entity.User;
 import com.neosoft.service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
+@Slf4j
 public class UserController {
 	@Autowired
 	public UserService userService;
 	
+	@Autowired
+	public UserConverter userConverter;
+	
 	@RequestMapping("/users")
-	public List<User> getAllUsers(){
-		System.out.println("********Inside Get method********");
-		return userService.getAllUser();
+	public List<UserDto> getAllUsers(){
+		log.info("********Inside getAllUsers method********");
+		List<User> user = userService.getAllUser();
+		return userConverter.entityToDto(user);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, value="/users")
-	public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
-		System.out.println("********Inside Post method********");
+	public ResponseEntity<UserDto> addUser(@Valid @RequestBody User user) {
+		log.info("********Inside addUser method********");
 		userService.addUser(user);
-		return new ResponseEntity<User>(user, HttpStatus.CREATED);
+		return new ResponseEntity<UserDto>(userConverter.entityToDto(user), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, value="/users/{userId}")
-	public ResponseEntity<User> updateUser(@PathVariable int userId,@Valid @RequestBody User user) {
-		System.out.println("********Inside PUT method********");
+	public ResponseEntity<UserDto> updateUser(@PathVariable int userId,@Valid @RequestBody User user) {
+		log.info("********Inside updateUser method********");
 		userService.updateUser(userId,user);
-		return new ResponseEntity<User>(user, HttpStatus.CREATED);
+		return new ResponseEntity<UserDto>(userConverter.entityToDto(user), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, value="/users/{userId}")
 	public void deleteUser(@PathVariable int userId) {
-		System.out.println("********Inside Delete method********");
+		log.info("********Inside deleteUser method********");
 		userService.deleteUser(userId);
 	}
 	
 	@RequestMapping("/usersByColumns")
-	public List<User> getAllUsersByColumns(@RequestParam String field1, @RequestParam String field2){
-		System.out.println("********Inside Get method getAllUsersByColumns********");
-		return userService.getAllUsersByColumns(field1,field2);
+	public List<UserDto> getAllUsersByColumns(@RequestParam String field1, @RequestParam String field2){
+		log.info("********Inside method getAllUsersByColumns********");
+		List<User> user = userService.getAllUsersByColumns(field1,field2);
+		return userConverter.entityToDto(user);
 	}
 	
 	@RequestMapping("/usersByDirections")
-	public List<User> getAllUsersByDirections(@RequestParam String field1, @RequestParam String field2){
-		System.out.println("********Inside Get method getAllUsersByDirections********");
-		return userService.getAllUsersByDirections(field1,field2);
+	public List<UserDto> getAllUsersByDirections(@RequestParam String field1, @RequestParam String field2){
+		log.info("********Inside method getAllUsersByDirections********");
+		List<User> user = userService.getAllUsersByDirections(field1,field2);
+		return userConverter.entityToDto(user);
 	}
 	
 	@RequestMapping("/usersByFirstName")
-	public List<User> getAllUsersByFirstName(@RequestParam String firstName){
-		System.out.println("********Inside Get method getAllUsersByFirstName********");
-		return userService.getAllUsersByFirstName(firstName);
+	public List<UserDto> getAllUsersByFirstName(@RequestParam String firstName){
+		log.info("********Inside method getAllUsersByFirstName********");
+		List<User> user = userService.getAllUsersByFirstName(firstName);
+		return userConverter.entityToDto(user);
 	}
 	
 	@RequestMapping("/usersByLastName")
-	public List<User> getAllUsersByLastName(@RequestParam String lastName){
-		System.out.println("********Inside Get method getAllUsersByLastName********");
-		return userService.getAllUsersByLastName(lastName);
+	public List<UserDto> getAllUsersByLastName(@RequestParam String lastName){
+		log.info("********Inside method getAllUsersByLastName********");
+		List<User> user = userService.getAllUsersByLastName(lastName);
+		return userConverter.entityToDto(user);
 	}
 	
 	@RequestMapping("/usersByPincode")
-	public List<User> getAllUsersByPincode(@RequestParam int pincode){
-		System.out.println("********Inside Get method getAllUsersByPincode********");
-		return userService.getAllUsersByPincode(pincode);
+	public List<UserDto> getAllUsersByPincode(@RequestParam String pincode){
+		log.info("********Inside method getAllUsersByPincode********");
+		List<User> user = userService.getAllUsersByPincode(pincode);
+		return userConverter.entityToDto(user);
 	}
  }

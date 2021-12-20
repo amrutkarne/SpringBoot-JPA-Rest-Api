@@ -1,4 +1,4 @@
-package com.neosoft.bean;
+package com.neosoft.dto;
 
 import java.util.Date;
 
@@ -20,14 +20,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-@Entity
-@Table(name="userRegister")
+
 @Data
-@Where(clause="cvoid=1")
-public class User {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+@AllArgsConstructor
+public class UserDto {
 	private int userId;
 	
 	@NotEmpty(message = "First name is required")
@@ -51,9 +49,7 @@ public class User {
 	@Size(max=6,message = "Pincode should be 6 digits")
 	private String pincode;
 	
-	//@Pattern(regexp="(^$|[1]{1})",message = "Cvoid flag should be 1")
 	@Min(message = "Cvoid flag should be 1 required", value = 1)
 	private int cvoid;
-
 
 }
