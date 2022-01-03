@@ -1,12 +1,14 @@
 package com.neosoft.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@CrossOrigin
 public class UserController {
 	@Autowired
 	public UserService userService;
@@ -34,6 +37,13 @@ public class UserController {
 	public List<UserDto> getAllUsers(){
 		log.info("********Inside getAllUsers method********");
 		List<User> user = userService.getAllUser();
+		return userConverter.entityToDto(user);
+	}
+	
+	@RequestMapping("/users/{userId}")
+	public UserDto getUsersById(@PathVariable int userId){
+		log.info("********Inside getUsersById method********");
+		User user = userService.getUsersById(userId);
 		return userConverter.entityToDto(user);
 	}
 	

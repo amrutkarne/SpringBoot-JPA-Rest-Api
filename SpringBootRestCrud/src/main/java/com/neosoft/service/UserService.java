@@ -3,6 +3,8 @@ package com.neosoft.service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -61,5 +63,9 @@ public class UserService{
 
 	public List<User> getAllUsersByPincode(String pincode) {
 		return userDataSort.findBypincode(pincode);
-	}	
+	}
+	
+	public User getUsersById(int id) {
+		return userDataSort.findById(id);
+	}
 }

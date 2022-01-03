@@ -1,10 +1,6 @@
 package com.neosoft.security;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -38,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-    	http.httpBasic().and().authorizeRequests()
+    	http.cors().and().httpBasic().and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/students/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/students").hasRole("ADMIN")
                 .antMatchers(HttpMethod.POST, "/addStudent").hasAnyRole("ADMIN","USER")

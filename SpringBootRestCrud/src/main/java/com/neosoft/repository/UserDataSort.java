@@ -11,4 +11,5 @@ public interface UserDataSort extends JpaRepository<User, Integer>{
 	List<User> findByFirstName(String firstName); 
 	List<User> findByLastName(String lastName);  
 	List<User> findBypincode(String pincode);  
+	User findById(int id);  
 }
